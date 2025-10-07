@@ -1,39 +1,26 @@
 version: 2
 
 models:
-  - name: mpg_standardized
-    description: "Standardized Auto MPG (typed + trimmed) loaded from raw.autompg___cars"
+  - name: g1_stg_insta_products
+    description: "Staging table for Instacart products data"
     columns:
-      - name: mpg
-        description: "Miles per gallon"
+      - name: product_id   /* Primary Key */
+        description: "Unique identifier for each product"
         tests:
+          - unique
           - not_null
 
-      - name: cylinders
-        description: "Cylinder count"
+      - name: product_name
+        description: "Name of the product" 
         tests:
           - not_null
-          - accepted_values:
-              values: [3, 4, 5, 6, 8]
-
-      - name: displacement
-        tests: [not_null]
-
-      - name: weight
-        tests: [not_null]
-
-      - name: acceleration
-        tests: [not_null]
-
-      - name: model_year
-        tests: [not_null]
-
-      - name: origin
-        description: "Country of origin"
+          
+      - name: aisle_id
+        description: "Identifier for the aisle where the product is located"
         tests:
           - not_null
-          - accepted_values:
-              values: ["usa", "europe", "japan"]
-
-      - name: make
-        description: "Vehicle make/model (string)"
+           
+      - name: department_id
+        description: "Identifier for the department where the product belongs"
+        tests:
+          - not_null

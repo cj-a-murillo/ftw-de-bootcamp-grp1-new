@@ -1,0 +1,38 @@
+version: 2
+
+models:
+  - name: g1_dq_products_summary
+    description: "Data quality summary for Instacart products table"
+    columns:
+      - name: row_count_raw
+        description: "Total number of rows in the raw products table"
+      - name: row_count_clean
+        description: "Total number of rows in the clean products table"
+      - name: null_pct_product_id
+        description: "Percentage of null values in the product_id column"
+      - name: null_pct_product_name
+        description: "Percentage of null values in the product_name column"
+      - name: null_pct_aisle_id
+        description: "Percentage of null values in the aisle_id column"
+      - name: null_pct_department_id  
+        description: "Percentage of null values in the department_id column"
+      - name: negative_product_id
+        description: "Count of negative values in the product_id column"
+      - name: negative_aisle_id
+        description: "Count of negative values in the aisle_id column"
+      - name: negative_department_id
+        description: "Count of negative values in the department_id column"
+  
+  - name: g1_dq_products_anomalies
+    description: "Data quality anomalies for Instacart products table"
+    columns:
+      - name: negative_product_id
+        description: "Count of negative values in the product_id column"
+      - name: negative_aisle_id
+        description: "Count of negative values in the aisle_id column"
+      - name: negative_department_id
+        description: "Count of negative values in the department_id column"
+      - name: null_pct_product_id
+        description: "Percentage of null values in the product_id column"
+      
+        
