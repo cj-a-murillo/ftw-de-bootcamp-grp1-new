@@ -34,5 +34,45 @@ models:
         description: "Count of negative values in the department_id column"
       - name: null_pct_product_id
         description: "Percentage of null values in the product_id column"
-      
+  - name: g1_dq_order_products_summary
+    description: "Data quality summary for Instacart order products table (combined prior + train)"
+    columns:
+      - name: row_count_raw
+        description: "Total number of rows in combined raw order products tables"
+      - name: row_count_clean
+        description: "Total number of rows in the clean order products table"
+      - name: dropped_rows
+        description: "Number of rows lost during data cleaning process"
+      - name: null_pct_order_id
+        description: "Percentage of null values in the order_id column"
+      - name: null_pct_product_id
+        description: "Percentage of null values in the product_id column"
+      - name: null_pct_add_to_cart_order
+        description: "Percentage of null values in the add_to_cart_order column"
+      - name: null_pct_reordered
+        description: "Percentage of null values in the reordered column"
+      - name: negative_order_id
+        description: "Count of negative values in the order_id column"
+      - name: negative_product_id
+        description: "Count of negative values in the product_id column"
+      - name: negative_add_to_cart_order
+        description: "Count of negative values in the add_to_cart_order column"
+      - name: invalid_reordered
+        description: "Count of invalid values in reordered column (not 0 or 1)"
+
+  - name: g1_dq_order_products_anomalies
+    description: "Data quality anomalies for Instacart order products table"
+    columns:
+      - name: negative_order_id
+        description: "Count of negative values in the order_id column"
+      - name: negative_product_id
+        description: "Count of negative values in the product_id column"
+      - name: negative_add_to_cart_order
+        description: "Count of negative values in the add_to_cart_order column"
+      - name: invalid_reordered
+        description: "Count of invalid values in reordered column (not 0 or 1)"
+      - name: null_order_id
+        description: "Count of null values in the order_id column"
+      - name: null_product_id
+        description: "Count of null values in the product_id column"   
         

@@ -24,3 +24,40 @@ models:
         description: "Identifier for the department where the product belongs"
         tests:
           - not_null
+  - name: g1_stg_insta_order_products
+    description: "Staging table for Instacart order products data (combined prior + train datasets)"
+    columns:
+      - name: order_id   /* Composite Key */
+        description: "Unique identifier for each order"
+        tests:
+          - not_null
+
+      - name: product_id   /* Composite Key */
+        description: "Unique identifier for each product in the order"
+        tests:
+          - not_null
+
+      - name: add_to_cart_order
+        description: "Sequential order in which products were added to cart"
+        tests:
+          - not_null
+
+      - name: reordered
+        description: "Indicator if product was reordered (1) or not (0)"
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1]
+      - name: order_id
+        tests:
+          - not_null
+          - relationships:
+              to: ref('g1_stg_insta_orders')
+              field: order_id
+
+      - name: product_id  
+        tests:
+          - not_null
+          - relationships:
+              to: ref('g1_stg_insta_products')
+              field: product_id
