@@ -14,4 +14,6 @@ sources:
   - name: clean
     schema: clean 
     tables:
+      - name: g1_stg_insta_aisles
+      - name: g1_stg_insta_departments
       - name: g1_stg_insta_products
