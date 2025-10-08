@@ -15,3 +15,4 @@ sources:
     schema: clean 
     tables:
       - name: g1_stg_insta_products
+      - name: g1_stg_insta_orders_products
