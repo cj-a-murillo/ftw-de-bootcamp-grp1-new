@@ -13,8 +13,11 @@ violations as (
     aisle_id, aisle,
 
     multiIf(
-      aisle_id <= 0,            'negative_aisle_id',
-      aisle is null,            'null_aisle',
+      aisle_id <= 0,                              'negative_aisle_id',
+      aisle_id is null,                           'null_aisle_id',
+      count(*) over (partition by aisle_id) > 1,  'duplicate_aisle_id',
+      aisle is null,                              'null_aisle',
+      count(*) over (partition by aisle) > 1,     'duplicate_aisle',
       'ok'
     ) as dq_issue
   from cln
