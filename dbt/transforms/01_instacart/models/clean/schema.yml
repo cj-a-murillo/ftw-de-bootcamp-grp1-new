@@ -24,6 +24,7 @@ models:
         description: "Identifier for the department where the product belongs"
         tests:
           - not_null
+
   - name: g1_stg_insta_order_products
     description: "Staging table for Instacart order products data (combined prior + train datasets)"
     columns:
@@ -61,3 +62,59 @@ models:
           - relationships:
               to: ref('g1_stg_insta_products')
               field: product_id
+
+
+  - name: g1_stg_insta_users
+    description: "Distinct list of users extracted from orders table."
+    columns:
+      - name: user_id
+        description: "Primary key for users."
+        tests:
+          - unique
+          - not_null
+
+  - name: g1_stg_insta_orders
+    description: "Cleaned orders data with user linkage and standardized types."
+    columns:
+      - name: order_id
+        description: "Primary key for orders."
+        tests:
+          - unique
+          - not_null
+
+      - name: user_id
+        description: "Foreign key referencing g1_stg_insta_users.user_id."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('g1_stg_insta_users')
+              field: user_id
+
+      - name: eval_set
+        description: "Evaluation set type (prior/train/test)."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['prior', 'train', 'test']
+
+      - name: order_number
+        description: "Sequential order number per user."
+        tests:
+          - not_null
+
+      - name: order_dow
+        description: "Day of week order was placed (0=Sunday ... 6=Saturday)."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1, 2, 3, 4, 5, 6]
+
+      - name: order_hour_of_day
+        description: "Hour of day order was placed (0–23)."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+
+      - name: days_since_prior_order
+        description: "Days since previous order; may contain null (NaN) for first orders."

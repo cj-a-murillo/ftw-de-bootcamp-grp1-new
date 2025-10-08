@@ -18,3 +18,5 @@ sources:
       - name: g1_stg_insta_departments
       - name: g1_stg_insta_products
       - name: g1_stg_insta_order_products
+      - name: g1_stg_insta_orders
+      - name: g1_stg_insta_users
