@@ -13,8 +13,11 @@ violations as (
     department_id, department,
 
     multiIf(
-      department_id <= 0,       'negative_department_id',
-      department is null,            'null_department',
+      department_id <= 0,                              'negative_department_id',
+      department_id is null,                           'null_department_id',
+      count(*) over (partition by department_id) > 1,  'duplicate_department_id',
+      department is null,                              'null_department',
+      count(*) over (partition by department) > 1,     'duplicate_department',
       'ok'
     ) as dq_issue
   from cln
