@@ -7,17 +7,19 @@ Follow the structure below, fill in your team’s work, and use it as both inter
 
 ## 1. Project Overview
 
-- **Dataset Used:**  
-  *(Briefly describe the dataset and domain — e.g., Chinook music store, OULAD education dataset, or IMDb entertainment dataset.)*  
+- **Dataset Used:**
+  Instacart Market Basket dataset
 
-- **Goal of the Exercise:**  
-  *(What was the objective? Example: transform OLTP schema into dimensional star schema for analytics.)*  
-
+- **Goal of the Exercise:**
+  Transform normalized transactional data into a dimensional star schema for business intelligence and analytics.
+  
 - **Team Setup:**  
-  *(State if you worked individually, as a group, or both. Mention collaboration style.)*  
+  Group collaboration with task splitting across cleaning, data quality checking, modeling, BI dashboarding, and documentation.
+  We adjusted workloads based on availability and supported each other when issues arose.
 
 - **Environment Setup:**  
-  *(Describe your environment — local vs remote, individual vs shared instances. Example: Docker containers on a shared VM + local laptops.)*  
+  - Shared ClickHouse instance running in Docker for group development
+  - Local dbt setups for individual testing and building
 
 ---
 
@@ -27,9 +29,12 @@ Follow the structure below, fill in your team’s work, and use it as both inter
   *(Diagram or describe: raw → clean → mart → BI.)*  
 
 - **Tools Used:**  
-  - Ingestion: `dlt`  
-  - Modeling: `dbt`  
-  - Visualization: `Metabase`  
+  - Ingestion: dlt (skipped)
+  - Database: Clickhouse (Docker setup)
+  - Data quality check: dbt (SQL-based transformation)
+  - Modeling: dbt (SQL-based transformation)
+  - Testing and queries: Dbeaver 
+  - Visualization: Metabase
   *(Add others if used.)*  
 
 - **Medallion Architecture Application:**  
@@ -47,8 +52,8 @@ Follow the structure below, fill in your team’s work, and use it as both inter
   *(Describe how the original tables were structured — 3NF, relationships, etc.)*  
 
 - **Star Schema Design:**  
-  - Fact Tables: *(e.g., FactSales, FactAssessment, FactRatings)*  
-  - Dimension Tables: *(e.g., Customer, Date, Genre, Student, Demographics, Title, Person)*  
+  - Fact Tables: *FactOrders*  
+  - Dimension Tables: *Aisles, Departments, Products, Users*  
 
 - **Challenges / Tradeoffs:**  
   *(E.g., handling missing data, many-to-many joins, exploding arrays, performance considerations.)*  
@@ -58,22 +63,29 @@ Follow the structure below, fill in your team’s work, and use it as both inter
 ## 4. Collaboration & Setup
 
 - **Task Splitting:**  
-  *(How the team divided ingestion, modeling, BI dashboards, documentation.)*  
+  - Ingestion: Python + dlt scripts (skipped)
+  - Modeling: distributed among everyone
+  - Visualization: Metabase dashboards
+  - Documentation: README & presentation outline
 
 - **Shared vs Local Work:**  
-  *(Issues faced with sync conflicts, version control, DB connections, etc.)*  
+  - Shared ClickHouse instance sometimes caused sync/version conflicts
+  - Local dbt environments allowed independent testing before merging
 
 - **Best Practices Learned:**  
-  *(E.g., using Git for dbt projects, naming conventions, documenting assumptions, group debugging sessions.)*  
+  - Clear naming convention
+  - Documenting assumptions and using tracker for tasks assignments
 
 ---
 
 ## 5. Business Questions & Insights
 
 - **Business Questions Explored:**  
-  1. *(Example: Who are the top customers by revenue?)*  
-  2. *(Example: What factors contribute to student dropout?)*  
-  3. *(Example: Which genres/actors perform best in ratings?)*  
+  1. What are the most reordered products?
+  2. What is the top aisle in terms of number of sales?
+  3. What is the average basket size per transaction?
+  4. What time of the day and day of week has the most transaction?
+  5. What is the customer segmentation in terms of low, moderate, high spenders?
 
 - **Dashboards / Queries:**  
   *(Add screenshots, SQL snippets, or summaries of dashboards created in Metabase.)*  
