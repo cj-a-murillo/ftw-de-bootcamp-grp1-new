@@ -1,7 +1,3 @@
-# 📝 Beginner Data Engineer Documentation & Presentation Guide
-
-This guide is for documenting and presenting your group’s **dimensional modeling exercise**.  
-Follow the structure below, fill in your team’s work, and use it as both internal documentation and a final presentation outline.  
 
 ---
 
@@ -26,7 +22,7 @@ Follow the structure below, fill in your team’s work, and use it as both inter
 ## 2. Architecture & Workflow
 
 - **Pipeline Flow:**  
-  *(Diagram or describe: raw → clean → mart → BI.)*  
+  *<img width="1021" height="328" alt="image" src="https://github.com/user-attachments/assets/7c013795-2f87-4813-9099-023b1eed4537" /> *  
 
 - **Tools Used:**  
   - Ingestion: dlt (skipped)
@@ -35,28 +31,34 @@ Follow the structure below, fill in your team’s work, and use it as both inter
   - Modeling: dbt (SQL-based transformation)
   - Testing and queries: Dbeaver 
   - Visualization: Metabase
-  *(Add others if used.)*  
 
 - **Medallion Architecture Application:**  
   - **Bronze (Raw):** Initial ingestion of source data  
   - **Silver (Clean):** Cleaning, type casting, handling missing values  
   - **Gold (Mart):** Business-ready star schema for BI  
 
-*(Insert diagram or screenshot here if possible.)*  
-
 ---
 
 ## 3. Modeling Process
 
-- **Source Structure (Normalized):**  
-  *(Describe how the original tables were structured — 3NF, relationships, etc.)*  
+- **Source Structure (Normalized):**
+  - **To meet 3NF normalization standards, each table contains data that are relevant to its entity:**
+    - No transitive dependencies
+    - All non-key attributes depend on the primary key
+    - No repeating groups
+      
+  *3NF ERD:*
+    <img width="1089" height="466" alt="INSTA_ERD_CLEAN" src="https://github.com/user-attachments/assets/c535a18f-0636-4852-83d3-1ed8949fd03a" />
 
 - **Star Schema Design:**  
-  - Fact Tables: *FactOrders*  
-  - Dimension Tables: *Aisles, Departments, Products, Users*  
+  - Fact Tables: *FactOrders , FactOrderProduct* 
+  - Dimension Tables: *Aisles, Departments, Dow, Products, Users,*
+    
+    <img width="914" height="594" alt="INSTA_STAR_SCHEMA" src="https://github.com/user-attachments/assets/0db34f0c-939a-4c55-8052-5023fd044598" />
 
-- **Challenges / Tradeoffs:**  
-  *(E.g., handling missing data, many-to-many joins, exploding arrays, performance considerations.)*  
+- **Challenges / Tradeoffs:**
+    - Ensuring dataset normalization to 3NF.
+    - Understanding test syntax, schema configuration, and edge case coverage in dbt unit tests.
 
 ---
 
@@ -116,15 +118,6 @@ Follow the structure below, fill in your team’s work, and use it as both inter
 - **Generalization:**  
   *(How this workflow could be applied to other datasets or business domains.)*  
 
----
-
-## 📢 Presentation Tips
-
-- Keep it **5–10 minutes**, like a project walkthrough.  
-- Use **diagrams, screenshots, and SQL snippets**.  
-- Focus on both **technical process** and **business insights**.  
-- End with your **key learnings and future improvements**.  
-- For other documentation tips. Read [this](TECHNICAL-DOCS.md).
 
 ---
 
