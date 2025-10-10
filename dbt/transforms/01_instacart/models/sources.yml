@@ -16,3 +16,12 @@ sources:
     tables:
       - name: g1_stg_insta_products
       - name: g1_stg_insta_order_products
+      - name: g1_stg_insta_aisles
+
+  - name: mart
+    schema: mart
+    tables:
+      - name: g1_insta_DimAisles
+      - name: g1_insta_DimProducts
+      - name: g1_dq_order_products_anomalies
+      - name: g1_dq_order_products_summary
