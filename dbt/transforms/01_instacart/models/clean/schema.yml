@@ -1,15 +1,53 @@
 version: 2
 
 models:
+
+# Unit test: g1_stg_insta_aisles
+  - name: g1_stg_insta_aisles
+    description: "Staging table for Instacart aisles data"  
+    columns:
+      - name: aisle_id
+        description: "Unique identifier for each aisle"
+        tests:
+          - not_null
+          - unique
+          - not_negative:
+              column_name: aisle_id
+
+      - name: aisle
+        description: "Aisle name"
+        tests:
+          - not_null
+
+# Unit test: g1_stg_insta_departments
+  - name: g1_stg_insta_departments
+    description: "Staging table for Instacart departments data"   
+    columns:
+      - name: department_id   /* Primary Key */
+        description: "Unique identifier for each department"
+        tests:
+          - not_null
+          - unique
+          - not_negative:
+              column_name: department_id
+
+      - name: department
+        description: "Department name"
+        tests:
+          - not_null
+
+# Unit test: g1_stg_insta_products
   - name: g1_stg_insta_products
     description: "Staging table for Instacart products data"
     columns:
       - name: product_id   /* Primary Key */
         description: "Unique identifier for each product"
         tests:
-          - unique
           - not_null
-
+          - unique
+          - not_negative:
+              column_name: product_id
+          
       - name: product_name
         description: "Name of the product" 
         tests:
@@ -19,12 +57,20 @@ models:
         description: "Identifier for the aisle where the product is located"
         tests:
           - not_null
+          - relationships:
+              to: ref('g1_stg_insta_aisles')
+              field: aisle_id
            
       - name: department_id
         description: "Identifier for the department where the product belongs"
         tests:
           - not_null
+          - relationships:
+              to: ref('g1_stg_insta_departments')
+              field: department_id
 
+
+# Unit test: g1_stg_insta_order_products
   - name: g1_stg_insta_order_products
     description: "Staging table for Instacart order products data (combined prior + train datasets)"
     columns:
@@ -32,16 +78,22 @@ models:
         description: "Unique identifier for each order"
         tests:
           - not_null
+          - not_negative:
+              column_name: order_id
 
       - name: product_id   /* Composite Key */
         description: "Unique identifier for each product in the order"
         tests:
           - not_null
+          - not_negative:
+              column_name: product_id
 
       - name: add_to_cart_order
         description: "Sequential order in which products were added to cart"
         tests:
           - not_null
+          - not_negative:
+              column_name: add_to_cart_order
 
       - name: reordered
         description: "Indicator if product was reordered (1) or not (0)"
@@ -49,6 +101,7 @@ models:
           - not_null
           - accepted_values:
               values: [0, 1]
+
       - name: order_id
         tests:
           - not_null
@@ -64,23 +117,30 @@ models:
               field: product_id
 
 
+# Unit test: g1_stg_insta_users
   - name: g1_stg_insta_users
     description: "Distinct list of users extracted from orders table."
     columns:
       - name: user_id
         description: "Primary key for users."
         tests:
-          - unique
           - not_null
+          - unique
+          - not_negative:
+              column_name: user_id
 
+
+# Unit test: g1_stg_insta_orders
   - name: g1_stg_insta_orders
     description: "Cleaned orders data with user linkage and standardized types."
     columns:
       - name: order_id
         description: "Primary key for orders."
         tests:
-          - unique
           - not_null
+          - unique
+          - not_negative:
+              column_name: order_id
 
       - name: user_id
         description: "Foreign key referencing g1_stg_insta_users.user_id."

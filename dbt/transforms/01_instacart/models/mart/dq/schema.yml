@@ -1,6 +1,7 @@
 version: 2
 
 models:
+
   - name: g1_dq_products_summary
     description: "Data quality summary for Instacart products table"
     columns:
@@ -16,13 +17,19 @@ models:
         description: "Percentage of null values in the aisle_id column"
       - name: null_pct_department_id  
         description: "Percentage of null values in the department_id column"
-      - name: negative_product_id
+      - name: duplicate_product_ids
+        description: "Count of duplicate product_id values"
+      - name: invalid_fk_aisle_id_count
+        description: "Count of aisle_id values in products that do not exist in aisles table"
+      - name: invalid_fk_department_id_count
+        description: "Count of department_id values in products that do not exist in departments table"
+      - name: invalid_product_id_count
         description: "Count of negative values in the product_id column"
-      - name: negative_aisle_id
+      - name: invalid_aisle_id_count
         description: "Count of negative values in the aisle_id column"
-      - name: negative_department_id
+      - name: invalid_department_id_count
         description: "Count of negative values in the department_id column"
-  
+
   - name: g1_dq_products_anomalies
     description: "Data quality anomalies for Instacart products table"
     columns:
@@ -34,6 +41,7 @@ models:
         description: "Count of negative values in the department_id column"
       - name: null_pct_product_id
         description: "Percentage of null values in the product_id column"
+
   - name: g1_dq_order_products_summary
     description: "Data quality summary for Instacart order products table (combined prior + train)"
     columns:
