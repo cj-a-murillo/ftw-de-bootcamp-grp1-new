@@ -1,8 +1,27 @@
 {{ config(materialized="view", schema="mart") }}
 
-select
-  countIf(product_id <= 0) as negative_product_id,
-  countIf(aisle_id <= 0) as negative_aisle_id,
-  countIf(department_id <= 0) as negative_department_id,
-  countIf(product_name is null) as null_product_name
-from {{ source('clean','g1_stg_insta_products') }}
+-- Row-level drilldown of “obviously wrong” records based on simple rules.
+-- LIMIT for demo-friendliness; remove in real pipelines.
+
+with cln as (
+  select *
+  from {{ ref('g1_stg_insta_products') }}
+),
+violations as (
+  select
+    product_id,
+    aisle_id,
+    department_id,
+    product_name,
+    multiIf(
+      product_id <= 0, 'nonpositive_product_id',
+      aisle_id <= 0, 'nonpositive_aisle_id',
+      department_id <= 0, 'nonpositive_department_id',
+      product_name is null, 'null_product_name',
+      'ok'
+    ) as dq_issue
+  from cln
+)
+select *
+from violations
+where dq_issue != 'ok'

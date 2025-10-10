@@ -1,6 +1,7 @@
 version: 2
 
 models:
+
   - name: g1_dq_products_summary
     description: "Data quality summary for Instacart products table"
     columns:
@@ -16,13 +17,19 @@ models:
         description: "Percentage of null values in the aisle_id column"
       - name: null_pct_department_id  
         description: "Percentage of null values in the department_id column"
-      - name: negative_product_id
+      - name: duplicate_product_ids
+        description: "Count of duplicate product_id values"
+      - name: invalid_fk_aisle_id_count
+        description: "Count of aisle_id values in products that do not exist in aisles table"
+      - name: invalid_fk_department_id_count
+        description: "Count of department_id values in products that do not exist in departments table"
+      - name: invalid_product_id_count
         description: "Count of negative values in the product_id column"
-      - name: negative_aisle_id
+      - name: invalid_aisle_id_count
         description: "Count of negative values in the aisle_id column"
-      - name: negative_department_id
+      - name: invalid_department_id_count
         description: "Count of negative values in the department_id column"
-  
+
   - name: g1_dq_products_anomalies
     description: "Data quality anomalies for Instacart products table"
     columns:
@@ -34,6 +41,7 @@ models:
         description: "Count of negative values in the department_id column"
       - name: null_pct_product_id
         description: "Percentage of null values in the product_id column"
+
   - name: g1_dq_order_products_summary
     description: "Data quality summary for Instacart order products table (combined prior + train)"
     columns:
@@ -75,4 +83,89 @@ models:
         description: "Count of null values in the order_id column"
       - name: null_product_id
         description: "Count of null values in the product_id column"   
+
+
+  # Orders Summary
+  - name: g1_dq_insta_orders_summary
+    description: "Data quality summary for Instacart orders table"
+    columns:
+      - name: row_count_raw
+        description: "Total number of rows in the raw orders table"
+      - name: row_count_clean
+        description: "Total number of rows in the clean orders table"
+      - name: dropped_rows
+        description: "Number of rows dropped during cleaning (raw - clean)"
+      - name: null_pct_order_id
+        description: "Percentage of null values in the order_id column"
+      - name: null_pct_user_id
+        description: "Percentage of null values in the user_id column"
+      - name: null_pct_eval_set
+        description: "Percentage of null values in the eval_set column"
+      - name: null_pct_order_number
+        description: "Percentage of null values in the order_number column"
+      - name: null_pct_order_dow
+        description: "Percentage of null values in the order_dow column"
+      - name: null_pct_order_hour_of_day
+        description: "Percentage of null values in the order_hour_of_day column"
+      - name: null_pct_days_since_prior_order
+        description: "Percentage of null values in the days_since_prior_order column"
+      - name: duplicate_orders
+        description: "Count of duplicate order_id values"
+      - name: invalid_user_id
+        description: "Count of user_id values in orders that do not exist in users table"
+      - name: invalid_order_number
+        description: "Count of order_number values less than 1"
+      - name: invalid_order_hour
+        description: "Count of order_hour_of_day values outside 0-23"
+      - name: invalid_days_since_prior_order
+        description: "Count of days_since_prior_order values less than 0 or greater than 30"
+
+  # Orders Anomalies
+  - name: g1_dq_insta_orders_anomalies
+    description: "Row-level data quality anomalies for Instacart orders table"
+    columns:
+      - name: order_id
+        description: "ID of the order"
+      - name: user_id
+        description: "ID of the user who placed the order"
+      - name: eval_set
+        description: "Order evaluation set (prior / train / test)"
+      - name: order_number
+        description: "Sequence number of the order for the user"
+      - name: order_dow
+        description: "Day of week when order was placed (0=Sunday, 6=Saturday)"
+      - name: order_hour_of_day
+        description: "Hour of day when order was placed (0-23)"
+      - name: days_since_prior_order
+        description: "Number of days since the prior order"
+      - name: dq_issue
+        description: "Classification of the detected data quality issue for the row"
+
+  # Users Summary
+  - name: g1_dq_insta_users_summary
+    description: "Data quality summary for Instacart users table"
+    columns:
+      - name: row_count_raw
+        description: "Total number of distinct users in raw orders data"
+      - name: row_count_clean
+        description: "Total number of rows in the clean users table"
+      - name: dropped_rows
+        description: "Number of rows dropped during cleaning (raw - clean)"
+      - name: null_pct_user_id
+        description: "Percentage of null values in the user_id column"
+      - name: duplicate_user_ids
+        description: "Count of duplicate user_id values in users table"
+      - name: invalid_user_in_orders
+        description: "Count of user_ids in orders that do not exist in users table"
+      - name: user_without_orders
+        description: "Count of users with no corresponding orders"
+
+  # Users Anomalies
+  - name: g1_dq_insta_users_anomalies
+    description: "Row-level data quality anomalies for Instacart users table"
+    columns:
+      - name: user_id
+        description: "ID of the user"
+      - name: dq_issue
+        description: "Classification of the detected data quality issue for the row"
         
