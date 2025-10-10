@@ -62,7 +62,34 @@
 
 ---
 
-## 4. Collaboration & Setup
+## 4. Data Quality Check
+### 🧪 Purpose of Data Quality Checks
+
+Data quality checks ensure that the data used in your pipeline is clean, consistent, and reliable before it is consumed by downstream models, dashboards, or business logic.
+
+#### 🎯 Why We Run Data Quality Checks?
+
+- **Ensure structural integrity**
+  - Catch missing values (`not_null`)
+  - Detect duplicate keys (`unique`)
+  - Validate foreign key relationships (`relationships`)
+
+- **Enforce domain constraints**
+  - Confirm values fall within expected ranges (e.g., `order_dow` between 0–6)
+  - Flag invalid categories (e.g., `eval_set` not in ['prior', 'train', 'test'])
+
+- **Protect downstream logic**
+  - Prevent broken joins or misleading aggregations
+  - Ensure dashboards and KPIs reflect clean, reliable data
+
+- **Support debugging and monitoring**
+  - Surface anomalies early during development
+
+##### [View DQ-INSTA-TESTS-GRP-1.md on GitHub](https://github.com/cj-a-murillo/ftw-de-bootcamp-grp1-new/blob/main/DQ-INSTA-TESTS-GRP-1.md)
+
+---
+
+## 5. Collaboration & Setup
 
 - **Task Splitting:**  
   - Ingestion: Python + dlt scripts (skipped)
@@ -76,41 +103,46 @@
 
 - **Best Practices Learned:**  
   - Clear naming convention
-  - Documenting assumptions and using tracker for tasks assignments
+  - Documenting assumptions and using a tracker for task assignments
 
 ---
 
-## 5. Business Questions & Insights
+## 6. Business Questions & Insights
 
 - **Business Questions Explored:**  
   1. What are the most reordered products?
   2. What is the top aisle in terms of number of sales?
   3. What is the average basket size per transaction?
-  4. What time of the day and day of week has the most transaction?
-  5. What is the customer segmentation in terms of low, moderate, high spenders?
+  4. What time of the day and day of the week has the most transactions?
+  5. What is the customer segmentation in terms of low, moderate, and  high spenders?
 
 - **Dashboards / Queries:**  
-  *(Add screenshots, SQL snippets, or summaries of dashboards created in Metabase.)*  
+  <img width="679" height="780" alt="image" src="https://github.com/user-attachments/assets/f6852322-4f05-430d-9ab8-a8c6c22d5812" />
 
-- **Key Insights:**  
-  - *(Highlight 1–2 interesting findings. Example: “Rock was the top genre in North America, while Latin genres dominated in South America.”)*  
+- [View Metabase Documentation on GitHub](https://github.com/cj-a-murillo/ftw-de-bootcamp-grp1-new/blob/main/documentations/metabase.md)
 
 ---
 
-## 6. Key Learnings
+## 7. Key Learnings
 
 - **Technical Learnings:**  
-  *(E.g., SQL joins, window functions, dbt builds/tests, schema design.)*  
-
-- **Team Learnings:**  
-  *(E.g., collaboration in shared environments, version control, importance of documentation.)*  
+  - Learned how to define column-level tests (not_null, unique, accepted_values) in schema.yml.
+  - Learned macro structure, templating, and parameterization for scalable testing.
+  - Normalized data to 3NF: Ensured all non-key attributes are fully dependent on the primary key, eliminating redundancy and improving data integrity across staging models.
+    
+- ** Team Learnings:**  
+  - Practiced collaborative modeling and task splitting across  modeling, data quality checks, visualization, and documentation.
+  - Learned the value of clear ownership and modular workflows for smoother onboarding and handoffs.
 
 - **Real-World Connection:**  
-  *(How this exercise relates to actual data engineering workflows in industry.)*  
+  - Simulated production workflows:
+    - Modeled data in Third Normal Form (3NF) to reduce redundancy and improve integrity
+    - Validated models using dbt unit tests for structure and referential accuracy
+    - Documented assumptions and logic for team onboarding and stakeholder visibility
 
 ---
 
-## 7. Future Improvements
+## 8. Future Improvements
 
 - **Next Steps with More Time:**  
   *(E.g., add orchestration with Airflow/Prefect, implement testing, optimize queries, handle larger datasets.)*  
@@ -120,5 +152,3 @@
 
 
 ---
-
-✅ By filling this template, your group will produce a professional-style project guide **just like real data engineers** — clear, structured, and insight-driven.
