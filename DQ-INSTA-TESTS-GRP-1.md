@@ -286,6 +286,7 @@ SELECT *
 FROM {{ model }}
 WHERE {{ column_name }} < 0
 {% endtest %}
+```
 ---
 
 ### ✅ Add a small `schema.yml` for docs
