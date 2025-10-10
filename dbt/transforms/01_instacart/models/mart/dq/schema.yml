@@ -28,8 +28,6 @@ models:
       - name: invalid_aisle_id_count
         description: "Count of negative values in the aisle_id column"
       - name: invalid_department_id_count
-        description: "Count of negative values in the department_id column"
-
   - name: g1_dq_products_anomalies
     description: "Data quality anomalies for Instacart products table"
     columns:
