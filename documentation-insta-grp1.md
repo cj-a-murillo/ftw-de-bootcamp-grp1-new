@@ -1,3 +1,4 @@
+# **📝 Instacart Market Basket Analysis Documentation - Group 1**
 
 ---
 
@@ -22,7 +23,7 @@
 ## 2. Architecture & Workflow
 
 - **Pipeline Flow:**  
-  *<img width="1021" height="328" alt="image" src="https://github.com/user-attachments/assets/7c013795-2f87-4813-9099-023b1eed4537" /> *  
+  <img width="1021" height="328" alt="image" src="https://github.com/user-attachments/assets/7c013795-2f87-4813-9099-023b1eed4537" /> 
 
 - **Tools Used:**  
   - Ingestion: dlt (skipped)
@@ -63,11 +64,9 @@
 ---
 
 ## 4. Data Quality Check
-### 🧪 Purpose of Data Quality Checks
-
 Data quality checks ensure that the data used in your pipeline is clean, consistent, and reliable before it is consumed by downstream models, dashboards, or business logic.
 
-#### 🎯 Why We Run Data Quality Checks?
+#### 🧪 Purpose of Data Quality Checks
 
 - **Ensure structural integrity**
   - Catch missing values (`not_null`)
@@ -85,7 +84,7 @@ Data quality checks ensure that the data used in your pipeline is clean, consist
 - **Support debugging and monitoring**
   - Surface anomalies early during development
 
-##### [View DQ-INSTA-TESTS-GRP-1.md on GitHub](https://github.com/cj-a-murillo/ftw-de-bootcamp-grp1-new/blob/main/DQ-INSTA-TESTS-GRP-1.md)
+##### [View DQ-INSTA-TESTS-GRP-1.md on GitHub](https://github.com/cj-a-murillo/ftw-de-bootcamp-grp1-new/blob/main/dq-insta-tests-grp1.md)
 
 ---
 
@@ -119,7 +118,7 @@ Data quality checks ensure that the data used in your pipeline is clean, consist
 - **Dashboards / Queries:**  
   <img width="679" height="780" alt="image" src="https://github.com/user-attachments/assets/f6852322-4f05-430d-9ab8-a8c6c22d5812" />
 
-- [View Metabase Documentation on GitHub](https://github.com/cj-a-murillo/ftw-de-bootcamp-grp1-new/blob/main/documentations/metabase.md)
+##### [View Metabase Documentation on GitHub](https://github.com/cj-a-murillo/ftw-de-bootcamp-grp1-new/blob/main/documentations/metabase.md)
 
 ---
 
