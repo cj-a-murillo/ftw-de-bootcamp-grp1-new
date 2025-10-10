@@ -8,7 +8,7 @@ This module defines the clean staging layer for the Instacart dataset using **db
 - Auto-generated dbt docs 
 ---
 
-## 📂 Folder Structure
+## 1) 📂 Folder Structure
 
 ```
 FTW-DE-BOOTCAMP-GRP1-NEW/
@@ -58,18 +58,22 @@ FTW-DE-BOOTCAMP-GRP1-NEW/
 ```
 
 ---
-## 🧪 dbt Tests – Staging Layer
+## 2) 🧪 dbt Tests – Staging Layer
 
 This section documents the column-level tests applied to the Instacart staging models (`g1_stg_insta_*`). 
 These tests ensure structural integrity, enforce domain constraints, and validate foreign key relationships.
 
 **Defined in:** `models/clean/schema.yml`
-
 ---
 
-## 🧱 Model Test Matrix
+### 🧱 Model Test Matrix
 
-### `g1_stg_insta_aisles`
+#### A) Clean (structural tests)
+
+* Validate not-null constraints, accepted values, and referential integrity tests.
+* Defined in: `models/clean/schema.yml`
+
+##### `g1_stg_insta_aisles`
 
 | Column     | Tests                                  |
 |------------|----------------------------------------|
@@ -78,7 +82,7 @@ These tests ensure structural integrity, enforce domain constraints, and validat
 
 ---
 
-### `g1_stg_insta_departments`
+##### `g1_stg_insta_departments`
 
 | Column         | Tests                                 |
 |----------------|----------------------------------------|
@@ -87,7 +91,7 @@ These tests ensure structural integrity, enforce domain constraints, and validat
 
 ---
 
-### `g1_stg_insta_products`
+##### `g1_stg_insta_products`
 
 | Column         | Tests                                                                  |
 |----------------|------------------------------------------------------------------------|
@@ -98,7 +102,7 @@ These tests ensure structural integrity, enforce domain constraints, and validat
 
 ---
 
-### `g1_stg_insta_order_products`
+##### `g1_stg_insta_order_products`
 
 | Column             | Tests                                                                          |
 |--------------------|--------------------------------------------------------------------------------|
@@ -109,7 +113,7 @@ These tests ensure structural integrity, enforce domain constraints, and validat
 
 ---
 
-### `g1_stg_insta_users`
+##### `g1_stg_insta_users`
 
 | Column    | Tests                                  |
 |-----------|----------------------------------------|
@@ -117,7 +121,7 @@ These tests ensure structural integrity, enforce domain constraints, and validat
 
 ---
 
-### `g1_stg_insta_orders`
+##### `g1_stg_insta_orders`
 
 | Column                | Tests                                                                  |
 |-----------------------|------------------------------------------------------------------------|
@@ -130,69 +134,16 @@ These tests ensure structural integrity, enforce domain constraints, and validat
 | `days_since_prior_order` | nullable (first orders may be null)                                 |
 
 
-## 🧪 Running dbt Tests
-
-### Clean (structural tests)
+#### B) Mart (semantic tests)
 
 * Validate not-null constraints, accepted values, and referential integrity tests.
-* Defined in: `models/clean/schema.yml`
-
-### Mart (semantic tests)
-
-* Validate not-null constraints, accepted values, and referential integrity tests.
-* Defined in: `models/mart/schema.yml`
-
-**Run tests:**
-
-```bash
-docker compose --profile jobs run --rm \
-  -w /workdir/transforms/01_instacart \
-  dbt test --profiles-dir . --target local
-```
-
----
-
-## ⚙️ Execute Models & Run Pipeline
-
-Build all models (`staging` → `clean` → `mart`) in this module:
-
-```bash
-docker compose --profile jobs run --rm \
-  -w /workdir/transforms/01_instacart \
-  dbt build --profiles-dir . --target local
-```
-
----
-
-## 📖 Generate Documentation
-
-Generate static HTML documentation for this dbt project:
-
-```bash
-docker compose --profile jobs run --rm \
-  -w /workdir/transforms/01_instacart \
-  dbt docs generate --profiles-dir . --target local --static
-```
-
-
-## ✅ Summary
-
-* **Tests:** run `dbt test` for data quality checks
-* **Build:** run `dbt build` to execute models
-* **Docs:** run `dbt docs generate` and open `target/index.html`
-
----
-
-## 1) Add dbt models (mart layer)
-
-Create a new folder:
 
 ```sql
-ftw-de-bootcamp/dbt/transforms/01_mpg/models/mart/dq/
+ftw-de-bootcamp/dbt/transforms/01_instacart/models/mart/dq/
 ```
-### ✅ Sample snippet of DQ check:
+#### ✅ Sample snippet of DQ check:
 
-#### DQ Orders Summary:
+##### DQ Orders Summary:
 ```
 {{ config(
     materialized = "view",
@@ -269,14 +220,16 @@ joined as (
 select * from joined
 ```
 ---
-## 🧪 Custom dbt Test – `test_not_negative`
+#### C) Adding custom test: 
+
+##### C.1) 🧪 Custom dbt Test – `test_not_negative`
 
 This macro defines a reusable test to validate that a given column in a model does **not contain negative values**. 
 It’s useful for enforcing domain constraints on identifiers, metrics, or any field expected to be zero or positive.
 
 ---
 
-### 📄 Macro Definition
+##### 📄 Macro Definition
 
 **Path:** `dbt/transforms/01_instacart/macros/test_not_negative_id.sql`
 
@@ -289,11 +242,11 @@ WHERE {{ column_name }} < 0
 ```
 ---
 
-### ✅ Add a small `schema.yml` for docs
+#### D) ✅ Add a small `schema.yml` for docs
 
-**Path:** `ftw-de-bootcamp/dbt/transforms/01_mpg/models/mart/dq/schema.yml`
+**Path:** `ftw-de-bootcamp/dbt/transforms/01_instacart/models/mart/dq/schema.yml`
 
-#### Sample schema.yml for orders
+##### Sample schema.yml for orders
 ```yaml
 version: 2
 
@@ -349,24 +302,40 @@ models:
 
 ---
 
-## ✅ Build the models
+## 3) Run  tests
 
 ```bash
 docker compose --profile jobs run --rm \
   -w /workdir/transforms/01_instacart \
-  dbt build --profiles-dir . --target local
+  dbt test --profiles-dir . --target local --static
 ```
 
-Generate/update docs (optional, nice for students):
+## 4) ⚙️ Execute Models & Run Pipeline
+
+1) Build all models (`staging` → `clean` → `mart`) in this module:
+
+```bash
+docker compose --profile jobs run --rm \
+  -w /workdir/transforms/01_instacart \
+  dbt build --profiles-dir . --target local --static
+```
+
+## 5) 📖 Generate Documentation
+
+Generate static HTML documentation for this dbt project:
 
 ```bash
 docker compose --profile jobs run --rm \
   -w /workdir/transforms/01_instacart \
   dbt docs generate --profiles-dir . --target local --static
 ```
-
 Open: `ftw-de-bootcamp/dbt/transforms/01_instacart/target/index.html`
 
 ---
 
+## ✅ Summary
+
+* **Tests:** run `dbt test` for data quality checks
+* **Build:** run `dbt build` to execute models
+* **Docs:** run `dbt docs generate` and open `target/static_index.html`
 
