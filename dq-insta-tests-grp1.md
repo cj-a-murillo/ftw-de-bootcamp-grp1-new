@@ -329,7 +329,7 @@ docker compose --profile jobs run --rm \
   -w /workdir/transforms/01_instacart \
   dbt docs generate --profiles-dir . --target local --static
 ```
-Open: `ftw-de-bootcamp/dbt/transforms/01_instacart/target/index.html`
+Open: `ftw-de-bootcamp/dbt/transforms/01_instacart/target/static_index.html`
 
 ---
 
@@ -338,4 +338,5 @@ Open: `ftw-de-bootcamp/dbt/transforms/01_instacart/target/index.html`
 * **Tests:** run `dbt test` for data quality checks
 * **Build:** run `dbt build` to execute models
 * **Docs:** run `dbt docs generate` and open `target/static_index.html`
+
 
