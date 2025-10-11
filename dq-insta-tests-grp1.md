@@ -139,9 +139,75 @@ These tests ensure structural integrity, enforce domain constraints, and validat
 * Validate not-null constraints, accepted values, and referential integrity tests.
 
 ```sql
+ftw-de-bootcamp/dbt/transforms/01_instacart/models/mart/
+```
+## 🧱 g1_insta_DimAisles
+
+Dim table for Instacart aisles data.
+
+| Column     | Description                      | Tests                                |
+|------------|----------------------------------|--------------------------------------|
+| aisle_id   | Unique identifier for each aisle | not_null, unique, not_negative       |
+| aisle      | Aisle name                       | not_null                             |
+
+---
+
+## 🧱 g1_insta_DimDepartments
+
+Dim table for Instacart departments data.
+
+| Column         | Description                          | Tests                                |
+|----------------|--------------------------------------|--------------------------------------|
+| department_id  | Unique identifier for each department| not_null, unique, not_negative       |
+| department     | Department name                      | not_null                             |
+
+---
+
+## 🧱 g1_insta_DimProducts
+
+Dim table for Instacart products data.
+
+| Column         | Description                          | Tests                                |
+|----------------|--------------------------------------|--------------------------------------|
+| product_id     | Unique identifier for each product    | not_null, unique, not_negative       |
+| product_name   | Name of the product                   | not_null                             |
+
+---
+
+## 🧱 g1_insta_DimUsers
+
+Dim list of users extracted from orders table.
+
+| Column     | Description             | Tests                                |
+|------------|-------------------------|--------------------------------------|
+| user_id    | Primary key for users   | not_null, unique, not_negative       |
+
+---
+
+## 📊 g1_insta_FactOrders
+
+Fact orders data with user linkage and standardized types.
+
+| Column                | Description                                                                 | Tests                                                                 |
+|-----------------------|-----------------------------------------------------------------------------|-----------------------------------------------------------------------|
+| order_id              | Foreign key for orders                                                      | not_null, not_negative, relationships → g1_stg_insta_order_products.order_id |
+| user_id               | Foreign key referencing g1_stg_insta_users.user_id                          | not_null, not_negative, relationships → g1_stg_insta_users.user_id          |
+| order_number          | Sequential order number per user                                            | not_null, not_negative                                               |
+| order_dow             | Day of week order was placed (0=Sunday ... 6=Saturday)                      | not_null, accepted_values: [0–6]                                     |
+| order_hour_of_day     | Hour of day order was placed (0–23)                                         | not_null, accepted_values: [0–23]                                    |
+| days_since_prior_order| Days since previous order; may contain null (NaN) for first orders          | nullable                                                             |
+| aisle_id              | Foreign key for each aisle ID                                               | not_null, not_negative, relationships → g1_stg_insta_order_aisles.aisle_id  |
+| department_id         | Foreign key for each department ID                                          | not_null, not_negative, relationships → g1_stg_insta_departments.department_id |
+| product_id            | Foreign key for each product ID                                             | not_null, not_negative, relationships → g1_stg_insta_products.product_id     |
+
+---
+
+
+#### ✅ Sample snippet of DQ check:
+
+```sql
 ftw-de-bootcamp/dbt/transforms/01_instacart/models/mart/dq/
 ```
-#### ✅ Sample snippet of DQ check:
 
 ##### DQ Orders Summary:
 ```
