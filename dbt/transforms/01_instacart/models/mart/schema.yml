@@ -68,7 +68,7 @@ models:
 
 
 # Unit test: g1_insta_FactOrders
-  - name: g1_insta_FactOrders
+  - name: g1_insta_FactOrder
     description: "Fact orders data with user linkage and standardized types."
     columns:
       - name: order_id
@@ -122,7 +122,7 @@ models:
           - not_negative:
               column_name: aisle_id
           - relationships:
-              to: ref('g1_stg_insta_order_aisles')
+              to: ref('g1_stg_insta_aisles')
               field: aisle_id
       
       - name: department_id
