@@ -2,7 +2,7 @@
 
 This module defines the clean staging layer for the Instacart dataset using **dbt**. It includes:
 
-- Structured staging models (`g1_stg_insta_*`)
+- Structured  models
 - Column-level dbt tests (structural + referential)
 - Optional dashboard scaffolding for data quality (Metabase-ready)
 - Auto-generated dbt docs 
@@ -406,6 +406,7 @@ Open: `ftw-de-bootcamp/dbt/transforms/01_instacart/target/static_index.html`
 * **Tests:** run `dbt test` for data quality checks
 * **Build:** run `dbt build` to execute models
 * **Docs:** run `dbt docs generate` and open `target/static_index.html`
+
 
 
 
