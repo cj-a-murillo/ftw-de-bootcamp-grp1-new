@@ -130,7 +130,7 @@ Data quality checks ensure that the data used in your pipeline is clean, consist
 ## 7. Key Learnings
 
 - **Technical Learnings:**  
-  - Learned how to define column-level tests (not_null, unique, accepted_values) in schema.yml.
+  - Learned how to define column-level tests (not_null, unique, accepted_values) in schema.
   - Learned macro structure, templating, and parameterization for scalable testing.
   - Normalized data to 3NF: Ensured all non-key attributes are fully dependent on the primary key, eliminating redundancy and improving data integrity across staging models.
     
@@ -149,7 +149,9 @@ Data quality checks ensure that the data used in your pipeline is clean, consist
 ## 8. Future Improvements
 
 - **Next Steps with More Time:**  
-  *(E.g., add orchestration with Airflow/Prefect, implement testing, optimize queries, handle larger datasets.)*  
+  - Better and more consolidated DQ dashboard
+  - Expanded dimensional model to answer more business question
+  - Uniform naming for columns on DQ views
 
 - **Generalization:**  
   *(How this workflow could be applied to other datasets or business domains.)*  
