@@ -39,7 +39,8 @@ FTW-DE-BOOTCAMP-GRP1-NEW/
     │       ├── g1_insta_DimUsers.sql
     │       ├── g1_insta_FactOrder.sql
     │       ├── g1_insta_FactOrderProduct.sql
-    │       └── dq/
+    │       ├── schema.yml
+    |       └── dq/
     │            ├── g1_dq_insta_aisles_anomalies.sql
     │            ├── g1_dq_insta_aisles_summary.sql
     │            ├── g1_dq_insta_departments_anomalies.sql
@@ -58,17 +59,34 @@ FTW-DE-BOOTCAMP-GRP1-NEW/
 ```
 
 ---
-## 2) 🧪 dbt Tests – Staging Layer
+## 2) 🧪 dbt Tests
+
+---
+## Adding custom test macro for dbt test schema.yml: 
+
+#### 🧪 Custom dbt Test – `test_not_negative`
+
+This macro defines a reusable test to validate that a given column in a model does **not contain negative values**. 
+It’s useful for enforcing domain constraints on identifiers, metrics, or any field expected to be zero or positive.
+##### 📄 Macro Definition
+
+**Path:** `dbt/transforms/01_instacart/macros/test_not_negative_id.sql`
+
+```sql
+{% test not_negative(model, column_name) %}
+SELECT *
+FROM {{ model }}
+WHERE {{ column_name }} < 0
+{% endtest %}
+```
+---
+
+## 🧱 Model Test Matrix
+
+## A) Clean (structural tests)
 
 This section documents the column-level tests applied to the Instacart staging models (`g1_stg_insta_*`). 
 These tests ensure structural integrity, enforce domain constraints, and validate foreign key relationships.
-
-**Defined in:** `models/clean/schema.yml`
----
-
-### 🧱 Model Test Matrix
-
-#### A) Clean (structural tests)
 
 * Validate not-null constraints, accepted values, and referential integrity tests.
 * Defined in: `models/clean/schema.yml`
@@ -133,8 +151,9 @@ These tests ensure structural integrity, enforce domain constraints, and validat
 | `order_hour_of_day`   | `accepted_values: [0–23]`                                              |
 | `days_since_prior_order` | nullable (first orders may be null)                                 |
 
+---
 
-#### B) Mart (semantic tests)
+## B) Mart (semantic tests)
 
 * Validate not-null constraints, accepted values, and referential integrity tests.
 
@@ -176,7 +195,7 @@ Dim table for Instacart products data.
 
 #### 🧱 g1_insta_DimUsers
 
-Dim list of users extracted from orders table.
+Dim list of users extracted from the orders table.
 
 | Column     | Description             | Tests                                |
 |------------|-------------------------|--------------------------------------|
@@ -202,11 +221,67 @@ Fact orders data with user linkage and standardized types.
 
 ---
 
+### ✅ Add a small `schema.yml` for docs
 
-#### ✅ Sample snippet of DQ check:
+##### Sample schema.yml for orders table
+```yaml
+version: 2
+
+models:
+  - name: g1_stg_insta_orders
+    description: "Cleaned orders data with user linkage and standardized types."
+    columns:
+      - name: order_id
+        description: "Primary key for orders."
+        tests:
+          - not_null
+          - unique
+          - not_negative:
+              column_name: order_id
+
+      - name: user_id
+        description: "Foreign key referencing g1_stg_insta_users.user_id."
+        tests:
+          - not_null
+          - relationships:
+              to: ref('g1_stg_insta_users')
+              field: user_id
+
+      - name: eval_set
+        description: "Evaluation set type (prior/train/test)."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['prior', 'train', 'test']
+
+      - name: order_number
+        description: "Sequential order number per user."
+        tests:
+          - not_null
+
+      - name: order_dow
+        description: "Day of week order was placed (0=Sunday ... 6=Saturday)."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1, 2, 3, 4, 5, 6]
+
+      - name: order_hour_of_day
+        description: "Hour of day order was placed (0–23)."
+        tests:
+          - not_null
+          - accepted_values:
+              values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
+
+      - name: days_since_prior_order
+        description: "Days since previous order; may contain null (NaN) for first orders."
+```
+---
+
+#### ✅ Sample snippet of DQ check using SQL
 
 ```sql
-ftw-de-bootcamp/dbt/transforms/01_instacart/models/mart/dq/
+ftw-de-bootcamp/dbt/transforms/01_instacart/models/
 ```
 
 ##### DQ Orders Summary:
@@ -286,87 +361,6 @@ joined as (
 select * from joined
 ```
 ---
-#### C) Adding custom test: 
-
-##### C.1) 🧪 Custom dbt Test – `test_not_negative`
-
-This macro defines a reusable test to validate that a given column in a model does **not contain negative values**. 
-It’s useful for enforcing domain constraints on identifiers, metrics, or any field expected to be zero or positive.
-
----
-
-##### 📄 Macro Definition
-
-**Path:** `dbt/transforms/01_instacart/macros/test_not_negative_id.sql`
-
-```sql
-{% test not_negative(model, column_name) %}
-SELECT *
-FROM {{ model }}
-WHERE {{ column_name }} < 0
-{% endtest %}
-```
----
-
-#### D) ✅ Add a small `schema.yml` for docs
-
-**Path:** `ftw-de-bootcamp/dbt/transforms/01_instacart/models/mart/dq/schema.yml`
-
-##### Sample schema.yml for orders
-```yaml
-version: 2
-
-models:
-  - name: g1_stg_insta_orders
-    description: "Cleaned orders data with user linkage and standardized types."
-    columns:
-      - name: order_id
-        description: "Primary key for orders."
-        tests:
-          - not_null
-          - unique
-          - not_negative:
-              column_name: order_id
-
-      - name: user_id
-        description: "Foreign key referencing g1_stg_insta_users.user_id."
-        tests:
-          - not_null
-          - relationships:
-              to: ref('g1_stg_insta_users')
-              field: user_id
-
-      - name: eval_set
-        description: "Evaluation set type (prior/train/test)."
-        tests:
-          - not_null
-          - accepted_values:
-              values: ['prior', 'train', 'test']
-
-      - name: order_number
-        description: "Sequential order number per user."
-        tests:
-          - not_null
-
-      - name: order_dow
-        description: "Day of week order was placed (0=Sunday ... 6=Saturday)."
-        tests:
-          - not_null
-          - accepted_values:
-              values: [0, 1, 2, 3, 4, 5, 6]
-
-      - name: order_hour_of_day
-        description: "Hour of day order was placed (0–23)."
-        tests:
-          - not_null
-          - accepted_values:
-              values: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]
-
-      - name: days_since_prior_order
-        description: "Days since previous order; may contain null (NaN) for first orders."
-```
-
----
 
 ## 3) Run  tests
 
@@ -402,13 +396,21 @@ docker compose --profile jobs run --rm \
 ```
 Open: `ftw-de-bootcamp/dbt/transforms/01_instacart/target/static_index.html`
 
----
 
+## 6) DQ Instacart Dashboard
+#### [Metabase DQ dashboard](http://54.87.106.52:3001/dashboard/52-instacart?tab=72-dq-overall-health-score&text=)
+
+---
 ## ✅ Summary
 
 * **Tests:** run `dbt test` for data quality checks
 * **Build:** run `dbt build` to execute models
 * **Docs:** run `dbt docs generate` and open `target/static_index.html`
+
+
+
+
+
 
 
 

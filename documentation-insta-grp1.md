@@ -84,8 +84,13 @@ Data quality checks ensure that the data used in your pipeline is clean, consist
 - **Support debugging and monitoring**
   - Surface anomalies early during development
 
-##### [View DQ-INSTA-TESTS-GRP-1.md on GitHub](https://github.com/cj-a-murillo/ftw-de-bootcamp-grp1-new/blob/main/dq-insta-tests-grp1.md)
+```bash
+- Test Result schema.yml:
+  PASS=79 WARN=0 ERROR=0 SKIP=0 TOTAL=79
+```
 
+##### [View DQ-INSTA-TESTS-GRP-1.md on GitHub](https://github.com/cj-a-murillo/ftw-de-bootcamp-grp1-new/blob/main/dq-insta-tests-grp1.md)
+##### [DQ Dashboard - Instacart](http://54.87.106.52:3001/dashboard/52-instacart?tab=77-dq-ref-integrity&text=)
 ---
 
 ## 5. Collaboration & Setup
@@ -129,7 +134,7 @@ Data quality checks ensure that the data used in your pipeline is clean, consist
   - Learned macro structure, templating, and parameterization for scalable testing.
   - Normalized data to 3NF: Ensured all non-key attributes are fully dependent on the primary key, eliminating redundancy and improving data integrity across staging models.
     
-- ** Team Learnings:**  
+- **Team Learnings:**  
   - Practiced collaborative modeling and task splitting across  modeling, data quality checks, visualization, and documentation.
   - Learned the value of clear ownership and modular workflows for smoother onboarding and handoffs.
 
