@@ -376,6 +376,11 @@ docker compose --profile jobs run --rm \
   dbt test --profiles-dir . --target local --static
 ```
 
+```bash
+- Test Result:
+  PASS=79 WARN=0 ERROR=0 SKIP=0 TOTAL=79
+```
+
 ## 4) ⚙️ Execute Models & Run Pipeline
 
 1) Build all models (`staging` → `clean` → `mart`) in this module:
