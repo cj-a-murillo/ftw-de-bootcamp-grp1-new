@@ -141,7 +141,7 @@ These tests ensure structural integrity, enforce domain constraints, and validat
 ```sql
 ftw-de-bootcamp/dbt/transforms/01_instacart/models/mart/
 ```
-## 🧱 g1_insta_DimAisles
+#### 🧱 g1_insta_DimAisles
 
 Dim table for Instacart aisles data.
 
@@ -152,7 +152,7 @@ Dim table for Instacart aisles data.
 
 ---
 
-## 🧱 g1_insta_DimDepartments
+#### 🧱 g1_insta_DimDepartments
 
 Dim table for Instacart departments data.
 
@@ -163,7 +163,7 @@ Dim table for Instacart departments data.
 
 ---
 
-## 🧱 g1_insta_DimProducts
+#### 🧱 g1_insta_DimProducts
 
 Dim table for Instacart products data.
 
@@ -174,7 +174,7 @@ Dim table for Instacart products data.
 
 ---
 
-## 🧱 g1_insta_DimUsers
+#### 🧱 g1_insta_DimUsers
 
 Dim list of users extracted from orders table.
 
@@ -184,7 +184,7 @@ Dim list of users extracted from orders table.
 
 ---
 
-## 📊 g1_insta_FactOrders
+#### 📊 g1_insta_FactOrders
 
 Fact orders data with user linkage and standardized types.
 
